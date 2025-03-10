@@ -1,0 +1,9 @@
+<h2>Учитель: {{ teacher.full_name }}</h2>
+
+<img src="{{ teacher.img.url }}" alt="{{ teacher.full_name }}" width="200">
+<p><strong>Email:</strong> {{ teacher.email }}</p>
+<p><strong>Возраст:</strong> {{ teacher.age }}</p>
+<p><strong>Специализация:</strong> {{ teacher.field }}</p>
+<p><strong>Описание:</strong> {{ teacher.description }}</p>
+
+<a href="{% url 'ecourses:teacher_list' %}">← Назад к списку учителей</a>

@@ -17,9 +17,14 @@ Including another URLconf
 
 from django.contrib import admin
 from django.urls import path,include
+from django.conf.urls.static import static
+
+from djangoProject import settings
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('ecourses/',include("user.urls", namespace="user")),
-
+    path('user/',include("user.urls", namespace="user")),
+    path('ecourses/',include("ecourses.urls", namespace="ecourses")),
 ]
+if settings.DEBUG:
+    urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)

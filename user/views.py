@@ -25,11 +25,11 @@ def login_page(request):
         if form.is_valid():
             email = form.cleaned_data['email']
             password = form.cleaned_data['password']
-            user = authenticate(request, username=email, password=password)  # Используем username=email
+            user = authenticate(request, username=email, password=password)
 
             if user:
                 login(request, user)
-                return render(request,'tesst.html')
+                return render(request,'ecourses/blog.html')
             else:
                 messages.error(request, 'Invalid login')
 
@@ -38,7 +38,7 @@ def login_page(request):
 
 def logout_page(request):
     logout(request)
-    return redirect('ecourses:index')  # Укажите правильный маршрут
+    return redirect('ecourses:index')
 
 
 
@@ -48,19 +48,19 @@ def register_page(request):
         form = RegisterForm(request.POST)
         if form.is_valid():
             user = form.save(commit=False)
-            user.set_password(form.cleaned_data['password'])  # Исправлен set_password
-            user.is_active = True  # Теперь пользователь сразу активен
+            user.set_password(form.cleaned_data['password'])
+            user.is_active = True
             user.save()
 
             messages.success(request, 'Registration successful. You can now log in.')
-            return redirect('login')  # Укажите правильный маршрут на страницу входа
+            return redirect(login_page)
 
     return render(request, 'ecourses/register.html', {'form': form})
 
 class RegisterPage(FormView):
     template_name = 'ecourses/register.html'
     form_class = RegisterForm
-    success_url = reverse_lazy('ecourses:index')
+    success_url = reverse_lazy('ecourses:login_page')
 
     def form_valid(self, form):
         user = form.save(commit=False)
