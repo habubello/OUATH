@@ -2,6 +2,9 @@ from django.shortcuts import render
 from .models import Blog, Teacher, Course, Category
 from django.shortcuts import render, get_object_or_404
 
+from .serializer import CourseSerializer
+
+
 def blog_list(request):
     blogs = Blog.objects.all()
     return render(request, 'ecourses/blog.html', {'blogs': blogs})
@@ -12,6 +15,8 @@ def teacher_list(request):
 
 def course_list(request):
     courses = Course.objects.all()
+    serializer_class = CourseSerializer
+
     return render(request, 'ecourses/course.html', {'courses': courses})
 
 def teacher_detail(request, pk):

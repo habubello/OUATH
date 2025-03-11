@@ -1,10 +1,15 @@
-from django.conf import settings
+from django.conf import settings,include
 from django.conf.urls.static import static
 from django.urls import path
+from rest_framework.routers import DefaultRouter
+from .views import CourseViewSet
 from ecourses.views import blog_list,teacher_list,course_list,blog_detail,teacher_detail,about,course_details
 app_name = 'ecourses'
 
+router = DefaultRouter()
+router.register(r'courses', CourseViewSet)
 urlpatterns = [
+    path('', include(router.urls)),
 
     path('blogs/', blog_list, name='blog_list'),
     path('blogs/<int:pk>/', blog_detail, name='blog_detail'),
